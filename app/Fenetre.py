@@ -43,15 +43,17 @@ class Fenetre:
         ac = True
         is_running = True
         while is_running:
-            clock.tick(10)
+            clock.tick(20)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     is_running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP and serp.serp[0].y == serp.serp[1].y:
+                        serp.demarer = True
                         serp.mooveY = -cote
                         serp.mooveX = 0
                     elif event.key == pygame.K_LEFT and serp.serp[0].x == serp.serp[1].x:
+                        serp.demarer = True
                         serp.mooveX = -cote
                         serp.mooveY = 0
                     elif event.key == pygame.K_DOWN and serp.serp[0].y == serp.serp[1].y:
@@ -59,6 +61,7 @@ class Fenetre:
                        serp.mooveY = +cote
                        serp.mooveX = 0
                     elif event.key == pygame.K_RIGHT and serp.serp[0].x == serp.serp[1].x:
+                        serp.demarer = True
                         serp.mooveX = +cote
                         serp.mooveY = 0
                     elif event.key == pygame.K_RETURN and serp.demarer == False:
