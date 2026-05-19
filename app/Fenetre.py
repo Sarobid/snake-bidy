@@ -48,24 +48,24 @@ class Fenetre:
                 if event.type == pygame.QUIT:
                     is_running = False
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_i and serp.serp[0].y == serp.serp[1].y:
+                    if event.key == pygame.K_UP and serp.serp[0].y == serp.serp[1].y:
                         serp.mooveY = -cote
                         serp.mooveX = 0
-                    elif event.key == pygame.K_j and serp.serp[0].x == serp.serp[1].x:
+                    elif event.key == pygame.K_LEFT and serp.serp[0].x == serp.serp[1].x:
                         serp.mooveX = -cote
                         serp.mooveY = 0
-                    elif event.key == pygame.K_k and serp.serp[0].y == serp.serp[1].y:
+                    elif event.key == pygame.K_DOWN and serp.serp[0].y == serp.serp[1].y:
                        serp.demarer = True
                        serp.mooveY = +cote
                        serp.mooveX = 0
-                    elif event.key == pygame.K_l and serp.serp[0].x == serp.serp[1].x:
+                    elif event.key == pygame.K_RIGHT and serp.serp[0].x == serp.serp[1].x:
                         serp.mooveX = +cote
                         serp.mooveY = 0
-                    elif event.key == pygame.K_j and serp.demarer == False:
+                    elif event.key == pygame.K_RETURN and serp.demarer == False:
                         serp.demarer = True
                         serp.mooveX = -cote
                         serp.mooveY = 0
-                    elif event.key == pygame.K_p:
+                    elif event.key == pygame.K_SPACE:
                         if serp.demarer == True:
                             serp.demarer = False
                             sonspause.play()
