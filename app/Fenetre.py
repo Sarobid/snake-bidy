@@ -12,11 +12,11 @@ from app.Accueil import Accueil
 class Fenetre:
 
     def __init__(self):
-        pygame.init()
+        # pygame.init()
         self.SCREEN = pygame.display.set_mode((870, 550))
         pygame.display.set_caption('Snake Bidy')
         pygame.mixer.init()
-        self.SIFFllement = pygame.mixer.music.load("./data/house_lo.ogg")
+        pygame.mixer.music.load("./data/house_lo.ogg")
         pygame.mixer.music.play(100,0.0)
         self.sonsmaty = pygame.mixer.Sound("./data/punch.wav")
         self.sonsminana = pygame.mixer.Sound("./data/whiff.wav")
@@ -46,7 +46,7 @@ class Fenetre:
 
     async def run(self):
         while self.is_running:
-            self.clock.tick(10)
+            self.SCREEN.fill(self.BLACK)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.is_running = False
@@ -74,10 +74,10 @@ class Fenetre:
                     elif event.key == pygame.K_SPACE:
                         if self.serp.demarer == True:
                             self.serp.demarer = False
-                            self.sonspause.play()
+                            # self.sonspause.play()
                         elif self.serp.demarer == False:
                             self.serp.demarer = True
-                            self.sonspause.play()
+                            # self.sonspause.play()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     xmouse = event.pos[0]
                     ymouse = event.pos[1]
@@ -111,11 +111,8 @@ class Fenetre:
                     self.gameOver.afficheGameOver(self.SCREEN,self.sak.score)
                 self.score.dessinScore(self.SCREEN, self.sak.score)
             pygame.display.update()
-            self.SCREEN.fill(self.BLACK)
             #musicGame.play()
-            if not asyncio.sync:
-                time.sleep(asyncio.frame)
-            else:
-                time.sleep(0.2)
+            # time.sleep(0.2)
+            self.clock.tick(10)
             await asyncio.sleep(0) 
         pygame.quit()
