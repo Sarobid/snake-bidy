@@ -43,7 +43,7 @@ class Fenetre:
         ac = True
         is_running = True
         while is_running:
-            clock.tick(60)
+            clock.tick(10)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     is_running = False
