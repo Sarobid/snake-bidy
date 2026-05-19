@@ -38,7 +38,7 @@ class Sakafo:
             a = False
             self.defEmp(x1,y1)
 
-    def voaHinana(self,serpent):
+    def voaHinana(self,serpent,sonsMinana):
         serp = serpent.serp
         maxgauche = self.pastec.x
         if self.pastec.x < serp[0].x:
@@ -57,4 +57,5 @@ class Sakafo:
             y = serp[len(serp) - 1].y + (-1) * serpent.mooveY
             serp.append(pygame.Rect(x,y,serp[0].width,serp[0].width))
             self.definitionEmplacement(self.x1,self.y1)
+            sonsMinana.play()
             self.score = self.score + 1

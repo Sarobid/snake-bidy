@@ -5,20 +5,27 @@ from app.Obstacle import Obstacle
 from app.Serpent import Serpent
 from app.Sakafo import Sakafo
 from  app.Score import Score
+from app.GameOver import GameOver
+from app.Accueil import Accueil
 
 class Fenetre:
 
     def __init__(self):
         pygame.init()
-        SCREEN = pygame.display.set_mode((900, 600))
-
-        pygame.display.set_caption('My Game')
-
+        SCREEN = pygame.display.set_mode((870, 550))
+        pygame.display.set_caption('Snake Bidy')
+        pygame.mixer.init()
+        SIFFllement = pygame.mixer.music.load("venv\Lib\site-packages\pygame\examples\data\house_lo.ogg")
+        pygame.mixer.music.play(100,0.0)
+        sonsMaty = pygame.mixer.Sound("venv\Lib\site-packages\pygame\examples\data\\punch.wav")
+        sonsMinana = pygame.mixer.Sound("venv\Lib\site-packages\pygame\examples\data\whiff.wav")
+        sonspause = pygame.mixer.Sound("venv\Lib\site-packages\pygame\examples\data\house_lo.ogg")
         WHITE = (255, 255, 255)
         BLACK = (0, 0, 0)
         RED = (255, 0, 0)
         GREEN = (0, 255, 0)
         BLUE = (0, 0, 255)
+        LINE = (46,57,44)
         YELLOW = (255, 85, 5)
         cote = 25
         width = 800
@@ -30,7 +37,10 @@ class Fenetre:
         serp2.mooveY = -cote
         sak = Sakafo(obs,50,50,width,height,cote,BLUE)
         score = Score(50,25,width,height,BLACK,GREEN)
+        gameOver = GameOver(50,50,width,height,cote,WHITE,GREEN,BLACK)
+        acceuil = Accueil(50,50,width,height,cote,WHITE,GREEN,RED)
         clock = pygame.time.Clock()
+        ac = True
         is_running = True
         while is_running:
             clock.tick(60)
@@ -38,43 +48,64 @@ class Fenetre:
                 if event.type == pygame.QUIT:
                     is_running = False
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_UP and serp.serp[0].y == serp.serp[1].y:
+                    if event.key == pygame.K_i and serp.serp[0].y == serp.serp[1].y:
                         serp.mooveY = -cote
                         serp.mooveX = 0
-                    elif event.key == pygame.K_LEFT and serp.serp[0].x == serp.serp[1].x:
+                    elif event.key == pygame.K_j and serp.serp[0].x == serp.serp[1].x:
                         serp.mooveX = -cote
                         serp.mooveY = 0
-                    elif event.key == pygame.K_DOWN and serp.serp[0].y == serp.serp[1].y:
+                    elif event.key == pygame.K_m and serp.serp[0].y == serp.serp[1].y:
+                       serp.demarer = True
                        serp.mooveY = +cote
                        serp.mooveX = 0
-                    elif event.key == pygame.K_RIGHT and serp.serp[0].x == serp.serp[1].x:
+                    elif event.key == pygame.K_l and serp.serp[0].x == serp.serp[1].x:
                         serp.mooveX = +cote
                         serp.mooveY = 0
-                    #if event.key == pygame.K_w and serp2.serp[0].y == serp2.serp[1].y:
-                      #  serp2.mooveY = -cote
-                     #   serp2.mooveX = 0
-                    #elif event.key == pygame.K_a and serp2.serp[0].x == serp2.serp[1].x:
-                      #  serp2.mooveX = -cote
-                     #   serp2.mooveY = 0
-                    #elif event.key == pygame.K_s and serp2.serp[0].y == serp2.serp[1].y:
-                     #  serp2.mooveY = +cote
-                     #  serp2.mooveX = 0
-                    #elif event.key == pygame.K_d and serp2.serp[0].x == serp2.serp[1].x:
-                    #   serp2.mooveX = +cote
-                    #    serp2.mooveY = 0
-            serp.midona(obs.obs)
-            #serp2.midona(obs.obs)
-            sak.voaHinana(serp)
-            #sak.voaHinana(serp2)
-            sak.dessinSakafo(SCREEN)
-            serp.mooveAutomatique()
-            #serp2.mooveAutomatique()
-            obs.dessinObstacle(SCREEN, WHITE)
-            serp.dessinSerpent(SCREEN,RED,GREEN)
-            #serp2.dessinSerpent(SCREEN, RED, YELLOW)
-            stade.dessinStade(SCREEN,WHITE)
+                    elif event.key == pygame.K_j and serp.demarer == False:
+                        serp.demarer = True
+                        serp.mooveX = -cote
+                        serp.mooveY = 0
+                    elif event.key == pygame.K_p:
+                        if serp.demarer == True:
+                            serp.demarer = False
+                            sonspause.play()
+                        elif serp.demarer == False:
+                            serp.demarer = True
+                            sonspause.play()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    xmouse = event.pos[0]
+                    ymouse = event.pos[1]
+                    a = pygame.Rect(xmouse,ymouse,1,1)
+                    b = pygame.Rect(gameOver.textRectButton.x,gameOver.textRectButton.y,gameOver.textRectButton.width,gameOver.textRectButton.height)
+                    c = pygame.Rect(acceuil.textRectButton.x,acceuil.textRectButton.y,acceuil.textRectButton.width,acceuil.textRectButton.height)
+                    #e = pygame.Rect(score.textRectS.x,score.textRectS.y,score.textRectS.width,score.textRectS.height)
+                    if serp.maty == 1 and obs.intersection(a,b) == True:
+                        serp.restartSerp()
+                        obs.restartObstacle()
+                        sak.definitionEmplacement(50,50)
+                        pygame.mixer.music.play(100,0.0)
+                        sak.score = 0
+                    elif ac == True and obs.intersection(a,c):
+                        ac = False
+            if ac == True:
+                stade.dessinStade(SCREEN, LINE)
+                acceuil.dessinAcceuil(SCREEN)
+            else:
+                if serp.maty == 0:
+                    serp.midona(obs.obs,sonsMaty)
+                    sak.voaHinana(serp,sonsMinana)
+                    sak.dessinSakafo(SCREEN)
+                    serp.mooveAutomatique()
+                    serp.dessinSerpent(SCREEN,RED,GREEN)
+                    stade.dessinStade(SCREEN,LINE)
+                    obs.dessinObstacle(SCREEN, WHITE)
+                elif serp.maty == 1:
+                    pygame.mixer.music.stop()
+                    stade.dessinStade(SCREEN, LINE)
+                    gameOver.afficheGameOver(SCREEN,sak.score)
+                score.dessinScore(SCREEN, sak.score)
             pygame.display.update()
             SCREEN.fill(BLACK)
-            score.dessinScore(SCREEN,sak.score)
+            #musicGame.play()
             time.sleep(0.2)
         pygame.quit()

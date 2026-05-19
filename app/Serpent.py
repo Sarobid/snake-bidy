@@ -4,6 +4,8 @@ class Serpent:
     def __init__(self,cote,x,y):
         self.x = x
         self.y = y
+        self.x0 = x
+        self.y0 = y
         self.mooveX = 0
         self.mooveY = cote
         self.serp = []
@@ -11,26 +13,43 @@ class Serpent:
         self.cote = cote
         self.initialisationSepent()
         self.maty = 0
+        self.demarer = False
 
-    def midona(self,obs):
+    def restartSerp(self):
+        i = 0
+        self.serp.clear()
+        self.maty = 0
+        self.demarer = False
+        x1 = self.x0
+        y1 = self.y0
+        self.x = x1
+        self.y = y1
+        while i < self.tailleI:
+            self.serp.append(pygame.Rect(x1, y1, self.cote, self.cote))
+            x1 = x1 + self.cote
+            i = i + 1
+    def midona(self,obs,sonsMaty):
         i = 1
         while i < len(self.serp):
             if self.serp[0].contains(self.serp[i]) == True:
                 self.maty = 1
+                sonsMaty.play()
                 #sprint("midona")
             i = i + 1
-        self.midonaObstacle(obs)
+        self.midonaObstacle(obs,sonsMaty)
 
-    def midonaObstacle(self,obs):
+    def midonaObstacle(self,obs,sonsMaty):
         i = 0
         while i < len(obs):
             if obs[i].contains(self.serp[0]) == True:
                 self.maty = 1
                 #print("midona")
+                sonsMaty.play()
             i = i + 1
 
     def mooveAutomatique(self):
-        if self.maty == 0:
+
+        if self.maty == 0 and self.demarer == True:
             self.moove(self.x, self.y)
             a = 0
             if self.x < self.serp[0].x:

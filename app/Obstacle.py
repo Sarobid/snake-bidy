@@ -18,6 +18,20 @@ class Obstacle:
                     break
             i = i + 1
 
+    def restartObstacle(self):
+        self.obs.clear()
+        self.obs.append(pygame.Rect(self.x1, self.y1, self.width - self.cote * 2, self.cote))
+        self.obs.append(pygame.Rect(self.x1, self.y1 + self.height - self.cote * 3, self.width - self.cote, self.cote))
+        self.obs.append(pygame.Rect(self.x1, self.y1, self.cote, self.height - self.cote * 2))
+        self.obs.append(pygame.Rect(self.x1 + self.width - self.cote * 2, self.y1, self.cote, self.height - self.cote - self.cote))
+        nbre = 20
+        i = 0
+        while i < nbre:
+            while 0 < 9:
+                if self.definitionObstacle() == False:
+                    break
+            i = i + 1
+
     def constructionSisiny(self,cote,x,y,width,height):
         i = 0
         tabSisiny = []
