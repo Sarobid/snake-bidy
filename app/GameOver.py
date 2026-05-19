@@ -25,7 +25,7 @@ class GameOver:
 
         screen.blit(self.textButton,self.textRectButton)
         screen.blit(self.text, self.textRect)
-        pygame.draw.rect(screen, self.colorBorder, self.border,25)
+        pygame.draw.rect(screen, self.colorBorder, self.border,self.cote)
 
 
 

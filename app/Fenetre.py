@@ -28,18 +28,19 @@ class Fenetre:
         self.BLUE = (0, 0, 255)
         self.LINE = (46,57,44)
         self.YELLOW = (255, 85, 5)
-        self.cote = 25
-        self.width = 800
-        self.height = 500
+        self.cote = 15
+        self.width = self.cote * 50
+        self.height = self.cote * 30
+
         self.stade = Stade(self.cote,self.width,self.height)
-        self.obs = Obstacle(self.cote,50,50,self.width,self.height)
-        self.serp = Serpent(self.cote,50 + self.cote + 100,50 + self.cote)
-        self.serp2 = Serpent(self.cote,50 + self.cote + 100,450)
-        self.serp2.mooveY = -self.cote
-        self.sak = Sakafo(self.obs,50,50,self.width,self.height,self.cote,self.BLUE)
-        self.score = Score(50,25,self.width,self.height,self.BLACK,self.GREEN)
-        self.gameOver = GameOver(50,50,self.width,self.height,self.cote,self.WHITE,self.GREEN,self.BLACK)
-        self.acceuil = Accueil(50,50,self.width,self.height,self.cote,self.WHITE,self.GREEN,self.RED)
+        self.x1 = self.stade.get_xStart()
+        self.y1 = self.stade.get_yStart()
+        self.obs = Obstacle(self.cote,self.x1,self.y1,self.width,self.height)
+        self.serp = Serpent(self.cote,self.x1 + self.cote * 5,self.y1 + self.cote)
+        self.sak = Sakafo(self.obs,self.x1,self.y1,self.width,self.height,self.cote,self.BLUE)
+        self.score = Score(self.x1,self.cote,self.width,self.height,self.BLACK,self.GREEN)
+        self.gameOver = GameOver(self.x1,self.y1,self.width,self.height,self.cote,self.WHITE,self.GREEN,self.BLACK)
+        self.acceuil = Accueil(self.x1,self.y1,self.width,self.height,self.cote,self.WHITE,self.GREEN,self.RED)
         self.clock = pygame.time.Clock()
         self.ac = True
         self.is_running = True
@@ -89,7 +90,7 @@ class Fenetre:
                     if self.serp.maty == 1 and self.obs.intersection(a,b) == True:
                         self.serp.restartSerp()
                         self.obs.restartObstacle()
-                        self.sak.definitionEmplacement(50,50)
+                        self.sak.definitionEmplacement(self.stade.get_xStart(),self.stade.get_yStart())
                         pygame.mixer.music.play(100,0.0)
                         self.sak.score = 0
                     elif self.ac == True and self.obs.intersection(a,c):
@@ -113,6 +114,6 @@ class Fenetre:
                 self.score.dessinScore(self.SCREEN, self.sak.score)
             pygame.display.update()
             #musicGame.play()
-            time.sleep(0.3)
+            time.sleep(0.2)
             await asyncio.sleep(0) 
         pygame.quit()

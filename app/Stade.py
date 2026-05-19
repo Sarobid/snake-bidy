@@ -5,19 +5,25 @@ class Stade:
         self.width = width
         self.height = height
         self.constructionStade()
+        
+    def get_xStart(self):
+        return self.cote * 2
 
+    def get_yStart(self):
+        return self.cote * 2
+    
     def constructionStade(self):
         i = 0
         self.tab = []
-        x1 = 50
-        y1 = 50
+        x1 = self.get_xStart()
+        y1 = self.get_yStart()
         #Verticale
         while x1 <= self.width:
             self.tab.append(pygame.Rect(x1,y1,x1,self.height))
             x1 = x1 + self.cote
         #Horizontale
-        x1 = 50
-        y1 = 50
+        x1 = self.get_xStart()
+        y1 = self.get_yStart()
         while y1 <= self.height:
             self.tab.append(pygame.Rect(x1,y1,self.width,y1))
             y1 = y1 + self.cote

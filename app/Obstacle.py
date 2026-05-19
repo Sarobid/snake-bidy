@@ -10,7 +10,8 @@ class Obstacle:
         self.cote = cote
         self.x1 = x
         self.y1 = y
-        nbre = 20
+        self.nbreObstacle = 30
+        nbre = self.nbreObstacle
         i = 0
         while i < nbre:
             while 0 < 9:
@@ -24,7 +25,7 @@ class Obstacle:
         self.obs.append(pygame.Rect(self.x1, self.y1 + self.height - self.cote * 3, self.width - self.cote, self.cote))
         self.obs.append(pygame.Rect(self.x1, self.y1, self.cote, self.height - self.cote * 2))
         self.obs.append(pygame.Rect(self.x1 + self.width - self.cote * 2, self.y1, self.cote, self.height - self.cote - self.cote))
-        nbre = 20
+        nbre = self.nbreObstacle
         i = 0
         while i < nbre:
             while 0 < 9:
