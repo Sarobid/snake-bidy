@@ -6,7 +6,21 @@ Jeu serpent
 
 * *Langage*: ***Python***
 * *Version*: ***3.9.5***
-* *Library*: ***PyGame****
+* *Library*: ***PyGame***
+
+## Lancement
+
+* Requirements
+
+```bash
+python3 -m pip install pygame
+```
+
+* Run
+
+```bash
+python3 main.py
+```
 
 ## Author
 
