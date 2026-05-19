@@ -15,11 +15,11 @@ class Fenetre:
         SCREEN = pygame.display.set_mode((870, 550))
         pygame.display.set_caption('Snake Bidy')
         pygame.mixer.init()
-        SIFFllement = pygame.mixer.music.load("venv\Lib\site-packages\pygame\examples\data\house_lo.ogg")
+        SIFFllement = pygame.mixer.music.load("./data/house_lo.ogg")
         pygame.mixer.music.play(100,0.0)
-        sonsMaty = pygame.mixer.Sound("venv\Lib\site-packages\pygame\examples\data\\punch.wav")
-        sonsMinana = pygame.mixer.Sound("venv\Lib\site-packages\pygame\examples\data\whiff.wav")
-        sonspause = pygame.mixer.Sound("venv\Lib\site-packages\pygame\examples\data\house_lo.ogg")
+        sonsMaty = pygame.mixer.Sound("./data/punch.wav")
+        sonsMinana = pygame.mixer.Sound("./data/whiff.wav")
+        sonspause = pygame.mixer.Sound("./data/house_lo.ogg")
         WHITE = (255, 255, 255)
         BLACK = (0, 0, 0)
         RED = (255, 0, 0)
@@ -54,7 +54,7 @@ class Fenetre:
                     elif event.key == pygame.K_j and serp.serp[0].x == serp.serp[1].x:
                         serp.mooveX = -cote
                         serp.mooveY = 0
-                    elif event.key == pygame.K_m and serp.serp[0].y == serp.serp[1].y:
+                    elif event.key == pygame.K_k and serp.serp[0].y == serp.serp[1].y:
                        serp.demarer = True
                        serp.mooveY = +cote
                        serp.mooveX = 0
