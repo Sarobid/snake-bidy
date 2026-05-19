@@ -2,8 +2,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.9.5-blue.svg)](https://www.python.org/downloads/)
 [![Library](https://img.shields.io/badge/library-Pygame-green.svg)](https://www.pygame.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 **Snake Bidy** est un jeu de serpent rétro-moderne développé intégralement en **Python** et **Pygame** en 2022. Conçu de manière rigoureuse selon les principes de la **Programmation Orientée Objet (POO)** et sans aucune assistance par IA (uniquement via la documentation officielle), le jeu se distingue par un système de génération procédurale d'obstacles rendant chaque session de jeu unique.
 
 ---
