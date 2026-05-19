@@ -10,12 +10,12 @@ class GameOver:
         self.colorBorder = colorBorder
 
         border = pygame.Rect(self.x, self.y, self.width - self.cote * 2, self.height - self.cote * 2)
-        self.font = pygame.font.SysFont('Snap ITC', 50)
+        self.font = pygame.font.Font(None, 50)
         self.text = self.font.render('Game Over', True, colorGame, colorFond)
         self.textRect = self.text.get_rect()
         self.textRect.center = (border.width / 2 + self.x, self.y + border.height / 3)
         RED = (255, 0, 0)
-        self.fontButton = pygame.font.SysFont('Arial Black', 30)
+        self.fontButton = pygame.font.Font(None, 30)
         self.textButton = self.fontButton.render('restart', True, colorGame, RED)
         self.textRectButton = self.textButton.get_rect()
         self.textRectButton.center = (border.width / 2 + self.x, self.y + border.height / 2)

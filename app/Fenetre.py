@@ -46,6 +46,7 @@ class Fenetre:
 
     async def run(self):
         while self.is_running:
+            self.clock.tick(60)
             self.SCREEN.fill(self.BLACK)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -112,7 +113,6 @@ class Fenetre:
                 self.score.dessinScore(self.SCREEN, self.sak.score)
             pygame.display.update()
             #musicGame.play()
-            # time.sleep(0.2)
-            self.clock.tick(10)
+            time.sleep(0.3)
             await asyncio.sleep(0) 
         pygame.quit()

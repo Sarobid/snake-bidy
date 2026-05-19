@@ -42,8 +42,8 @@ class Obstacle:
         return tabSisiny
 
     def definitionObstacle(self):
-        x = random.randint(1, (self.width - self.cote * 4) / self.cote)
-        y = random.randint(1, (self.height - self.cote * 4) / self.cote)
+        x = random.randint(1, int((self.width - self.cote * 4) / self.cote))
+        y = random.randint(1, int((self.height - self.cote * 4) / self.cote))
         x = x * self.cote + self.x1
         y = y * self.cote + self.y1
         rect = pygame.Rect(x,y,self.taille[random.randint(0,len(self.taille) -1)] * self.cote,self.taille[random.randint(0,len(self.taille)-1)] * self.cote)

@@ -22,8 +22,8 @@ class Sakafo:
         self.defEmp(x1,y1)
 
     def defEmp(self,x1,y1):
-        x = random.randint(1, (self.width - self.cote * 4) / self.cote)
-        y = random.randint(1, (self.height - self.cote * 4) / self.cote)
+        x = random.randint(1,int((self.width - self.cote * 4) / self.cote))
+        y = random.randint(1, int((self.height - self.cote * 4) / self.cote))
         self.pastec.x = x * self.cote + x1
         self.pastec.y = y * self.cote + y1
         a = False
