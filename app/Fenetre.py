@@ -16,8 +16,8 @@ class Fenetre:
         self.SCREEN = pygame.display.set_mode((870, 550))
         pygame.display.set_caption('Snake Bidy')
         pygame.mixer.init()
-        pygame.mixer.music.load("./data/house_lo.ogg")
-        pygame.mixer.music.play(100,0.0)
+        # pygame.mixer.music.load("./data/house_lo.ogg")
+        # pygame.mixer.music.play(100,0.0)
         self.sonsmaty = pygame.mixer.Sound("./data/punch.wav")
         self.sonsminana = pygame.mixer.Sound("./data/whiff.wav")
         # self.sonspause = pygame.mixer.Sound("./data/house_lo.ogg")
@@ -91,7 +91,7 @@ class Fenetre:
                         self.serp.restartSerp()
                         self.obs.restartObstacle()
                         self.sak.definitionEmplacement(self.stade.get_xStart(),self.stade.get_yStart())
-                        pygame.mixer.music.play(100,0.0)
+                        # pygame.mixer.music.play(100,0.0)
                         self.sak.score = 0
                     elif self.ac == True and self.obs.intersection(a,c):
                         self.ac = False
@@ -100,6 +100,7 @@ class Fenetre:
                 self.acceuil.dessinAcceuil(self.SCREEN)
             else:
                 if self.serp.maty == 0:
+                    # pygame.mixer.music.play(100,0.0)
                     self.serp.midona(self.obs.obs,self.sonsmaty)
                     self.sak.voaHinana(self.serp,self.sonsminana)
                     self.sak.dessinSakafo(self.SCREEN)
@@ -108,7 +109,7 @@ class Fenetre:
                     self.stade.dessinStade(self.SCREEN,self.LINE)
                     self.obs.dessinObstacle(self.SCREEN, self.WHITE)
                 elif self.serp.maty == 1:
-                    pygame.mixer.music.stop()
+                    # pygame.mixer.music.stop()
                     self.stade.dessinStade(self.SCREEN, self.LINE)
                     self.gameOver.afficheGameOver(self.SCREEN,self.sak.score)
                 self.score.dessinScore(self.SCREEN, self.sak.score)
