@@ -2,7 +2,7 @@ import pygame
 import os
 
 def getFont(size: int) -> pygame.font.Font:
-    size = size - 10
+    # size = size - 10
     font_path = "./data/font/press_start_2p/PressStart2P-Regular.ttf"
     if os.path.exists(font_path):
         return pygame.font.Font(font_path, size)
@@ -48,3 +48,26 @@ def calculer_dimensions_jeu(
     height_jeu = nb_cases_height * cote
     
     return width_jeu, height_jeu
+
+def get_dynamic_font_size(text: str, target_width: int, max_allowed_pct: float = 0.50) -> int:
+    """
+    Calcule la taille de police idéale (en points) pour qu'un texte occupe 
+    un pourcentage cible (max_allowed_pct) de la largeur de la zone de jeu (target_width).
+    """
+    # Une règle empirique propre : à la taille 10, chaque caractère d'une police 
+    # standard occupe environ 6 à 7 pixels de large. 
+    # Pour 'Snake Bidy' (10 caractères), on estime la taille idéale :
+    nb_caracteres = len(text)
+    
+    # Largeur que le texte DOIT occuper au maximum en pixels
+    largeur_cible_pixels = target_width * max_allowed_pct
+    
+    # Formule prédictive pour estimer la taille en points (fontSize)
+    # On divise par le nombre de caractères et un facteur de proportionnalité (0.6)
+    font_size = int(largeur_cible_pixels / (nb_caracteres * 0.6))
+    
+    # Sécurités : On évite une police géante ou invisible
+    if font_size > 100: font_size = 100
+    if font_size < 20: font_size = 20
+        
+    return font_size
