@@ -11,7 +11,7 @@ class Score:
         self.textColor = textColor
         self.width = width
         self.height = height
-        self.meilleur = 90
+        self.meilleur = 0
         self.padding = 10
         self.font_size = get_dynamic_font_size('BEST SCORE: 100', self.width, max_allowed_pct=0.15)
 
