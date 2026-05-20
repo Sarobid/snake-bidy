@@ -1,13 +1,14 @@
 import pygame
 import random
+import math
 from app.Obstacle import Obstacle
 class Sakafo:
 
     CATALOGUE_FRUITS = {
         "apple1":  {"image_path": "./data/fruit/apple1.png",  "points": 1, "couleur_fallback": (255, 0, 0)},
         "apple":  {"image_path": "./data/fruit/apple.png",  "points": 2, "couleur_fallback": (255, 0, 0)},
-        "banana1":  {"image_path": "./data/fruit/banana1.png",  "points": 1, "couleur_fallback": (255, 255, 0)},
-        "strawberry":  {"image_path": "./data/fruit/strawberry.png",  "points": 2, "couleur_fallback": (255, 0, 255)},
+        # "banana1":  {"image_path": "./data/fruit/banana1.png",  "points": 1, "couleur_fallback": (255, 255, 0)},
+        "strawberry":  {"image_path": "./data/fruit/strawberry.png",  "points": 1, "couleur_fallback": (255, 0, 255)},
         "pineapple":  {"image_path": "./data/fruit/pineapple.png",  "points": 3, "couleur_fallback": (255, 255, 0)},
     }
 
@@ -41,7 +42,15 @@ class Sakafo:
         texture = self.textures[self.current_fruit]
         
         if texture:
-            screen.blit(texture, self.pastec)
+            temps = pygame.time.get_ticks() * 0.005 
+            facteur_zoom = 1.0 + 0.15 * math.sin(temps)
+            nouvelle_taille = int(self.cote * facteur_zoom)
+            texture_animee = pygame.transform.scale(texture, (nouvelle_taille, nouvelle_taille))
+            rect_anime = texture_animee.get_rect()
+            rect_anime.center = self.pastec.center
+            
+            screen.blit(texture_animee, rect_anime)
+
         else:
             pygame.draw.rect(screen, self.color, self.pastec)
 

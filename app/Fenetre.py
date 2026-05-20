@@ -31,7 +31,7 @@ class Fenetre:
         self.BLUE = (0, 0, 255)
         self.LINE = (46,57,44)
         self.YELLOW = (255, 85, 5)
-        self.cote = 15
+        self.cote = 17
         # self.width = self.cote * 50
         # self.height = self.cote * 30
         self.pct_g = 0.3
