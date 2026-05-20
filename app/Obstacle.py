@@ -10,7 +10,7 @@ class Obstacle:
         self.cote = cote
         self.x1 = x
         self.y1 = y
-        self.nbreObstacle = 30
+        self.nbreObstacle = self.calculer_nombre_obstacles()
         nbre = self.nbreObstacle
         i = 0
         while i < nbre:
@@ -18,6 +18,8 @@ class Obstacle:
                 if self.definitionObstacle() == False:
                     break
             i = i + 1
+    def set_best_score(self, best_score: int):
+        self.nbreObstacle = self.calculer_nombre_obstacles(best_score)
 
     def restartObstacle(self):
         self.obs.clear()
@@ -78,3 +80,28 @@ class Obstacle:
         if maxgauche < mindroit and maxbas < minhaut:
             a = True
         return a
+    
+    def calculer_nombre_obstacles(self, meilleur_score: float = 0) -> int:
+        densite = self.calculer_densite_progressive(meilleur_score)
+        nb_cases_x = self.width // self.cote
+        nb_cases_y = self.height // self.cote
+        surface_totale_cases = nb_cases_x * nb_cases_y
+        nb_obstacles = int(surface_totale_cases * densite)
+        if nb_obstacles < 5: 
+            nb_obstacles = 5   # Minimum pour garder du challenge sur petit écran
+        elif nb_obstacles > 45: 
+            nb_obstacles = 45  # Maximum pour éviter de bloquer complètement le serpent
+        return nb_obstacles
+    
+    def calculer_densite_progressive(self,meilleur_score: int) -> float:
+        densite_minimale = 0.02  # 2% d'obstacles pour un vrai débutant (très accessible)
+        densite_maximale = 0.06  # 6% d'obstacles maximum (très difficile, style Hardcore)
+        
+        bonus_difficulte = (meilleur_score // 10) * 0.005
+        
+        densite_finale = densite_minimale + bonus_difficulte
+        
+        if densite_finale > densite_maximale:
+            densite_finale = densite_maximale
+            
+        return densite_finale
