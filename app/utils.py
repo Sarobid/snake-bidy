@@ -7,7 +7,6 @@ def getFont(size: int) -> pygame.font.Font:
     if os.path.exists(font_path):
         return pygame.font.Font(font_path, size)
     else:
-        print(f"⚠️ Alerte Designer : Fichier {font_path} introuvable. Utilisation de la police par défaut.")
         return pygame.font.Font(None, size)
     
 
@@ -20,11 +19,6 @@ def calculer_dimensions_jeu(
     pct_haut: float = 0.10,    # 10% de marge en haut par défaut (pour le score)
     pct_bas: float = 0.05      # 5% de marge en bas par défaut
 ) -> tuple[int, int]:
-    """
-    Calcule les dimensions maximales de la zone de jeu (width, height)
-    en appliquant des pourcentages de marge personnalisés pour chaque côté,
-    tout en garantissant un alignement parfait sur la grille (cote).
-    """
     # 1. On calcule la taille des marges en pixels en fonction de l'écran
     marge_gauche = widthScreen * pct_gauche
     marge_droite = widthScreen * pct_droite
@@ -50,10 +44,6 @@ def calculer_dimensions_jeu(
     return width_jeu, height_jeu
 
 def get_dynamic_font_size(text: str, target_width: int, max_allowed_pct: float = 0.50) -> int:
-    """
-    Calcule la taille de police idéale (en points) pour qu'un texte occupe 
-    un pourcentage cible (max_allowed_pct) de la largeur de la zone de jeu (target_width).
-    """
     # Une règle empirique propre : à la taille 10, chaque caractère d'une police 
     # standard occupe environ 6 à 7 pixels de large. 
     # Pour 'Snake Bidy' (10 caractères), on estime la taille idéale :
@@ -68,6 +58,6 @@ def get_dynamic_font_size(text: str, target_width: int, max_allowed_pct: float =
     
     # Sécurités : On évite une police géante ou invisible
     if font_size > 100: font_size = 100
-    if font_size < 20: font_size = 20
+    # if font_size < 20: font_size = 20
         
     return font_size

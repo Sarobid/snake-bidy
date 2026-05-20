@@ -54,7 +54,7 @@ class Fenetre:
         self.obs = Obstacle(self.cote,self.x1,self.y1,self.width,self.height)
         self.serp = Serpent(self.cote,self.x1 + self.cote * 5,self.y1 + self.cote)
         self.sak = Sakafo(self.obs,self.x1,self.y1,self.width,self.height,self.cote,self.BLUE)
-        self.score = Score(self.x1,self.cote,self.width,self.height,self.BLACK,self.GREEN)
+        self.score = Score(self.x1,self.y1,self.cote,self.width,self.height,self.BLACK,self.GREEN)
         self.gameOver = GameOver(self.x1,self.y1,self.width,self.height,self.cote,self.WHITE,self.GREEN,self.BLACK)
         self.acceuil = Accueil(self.x1,self.y1,self.width,self.height,self.cote,self.WHITE,self.GREEN,self.RED)
         self.clock = pygame.time.Clock()
