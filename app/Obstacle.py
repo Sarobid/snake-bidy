@@ -2,7 +2,7 @@ import pygame
 import random
 class Obstacle:
 
-    def __init__(self,cote,x,y,width,height):
+    def __init__(self,cote,x,y,width,height,best_score=0):
         self.obs = self.constructionSisiny(cote,x,y,width,height)
         self.taille = [1,2,3,4]
         self.width = width
@@ -10,7 +10,7 @@ class Obstacle:
         self.cote = cote
         self.x1 = x
         self.y1 = y
-        self.nbreObstacle = self.calculer_nombre_obstacles()
+        self.nbreObstacle = self.calculer_nombre_obstacles(best_score)
         nbre = self.nbreObstacle
         i = 0
         while i < nbre:
@@ -18,6 +18,7 @@ class Obstacle:
                 if self.definitionObstacle() == False:
                     break
             i = i + 1
+
     def set_best_score(self, best_score: int):
         self.nbreObstacle = self.calculer_nombre_obstacles(best_score)
 
