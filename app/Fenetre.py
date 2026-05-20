@@ -34,17 +34,21 @@ class Fenetre:
         self.cote = 15
         # self.width = self.cote * 50
         # self.height = self.cote * 30
+        self.pct_g = 0.2
+        self.pct_h = 0.2
+        self.pct_d = 0.3
+        self.pct_b = 0.2
         self.width, self.height = calculer_dimensions_jeu(
             widthScreen, 
             heightScreen, 
             self.cote,
-            pct_gauche=0.2,
-            pct_droite=0.2,
-            pct_haut=0.2,  
-            pct_bas=0.2
+            pct_gauche=self.pct_g,
+            pct_droite=self.pct_d,
+            pct_haut=self.pct_h,  
+            pct_bas=self.pct_b
         )
 
-        self.stade = Stade(self.cote,self.width,self.height,widthScreen,heightScreen)
+        self.stade = Stade(self.cote,self.width,self.height,widthScreen,heightScreen,self.pct_g,self.pct_h)
         self.x1 = self.stade.get_xStart()
         self.y1 = self.stade.get_yStart()
         self.obs = Obstacle(self.cote,self.x1,self.y1,self.width,self.height)

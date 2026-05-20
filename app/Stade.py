@@ -1,18 +1,22 @@
 import pygame
 class Stade:
-    def __init__(self,cote,width,height,widthScreen,heightScreen):
+    def __init__(self,cote,width,height,widthScreen,heightScreen,pct_gauche=0.05, pct_haut=0.05):
         self.cote = cote
         self.width = width
         self.height = height
         self.widthScreen = widthScreen
         self.heightScreen = heightScreen
+        self.pct_gauche = pct_gauche
+        self.pct_haut = pct_haut
         self.constructionStade()
         
     def get_xStart(self):
-        return (self.widthScreen - self.width) // 2
+        position_pixels = self.widthScreen * self.pct_gauche
+        return int((position_pixels // self.cote) * self.cote)
 
     def get_yStart(self):
-        return (self.heightScreen - self.height) // 2
+        position_pixels = self.heightScreen * self.pct_haut
+        return int((position_pixels // self.cote) * self.cote)
     
     def constructionStade(self):
         i = 0
