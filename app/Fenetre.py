@@ -20,7 +20,7 @@ class Fenetre:
         pygame.mixer.music.play(100,0.0)
         self.sonsmaty = pygame.mixer.Sound("./data/punch.wav")
         self.sonsminana = pygame.mixer.Sound("./data/whiff.wav")
-        self.sonspause = pygame.mixer.Sound("./data/house_lo.ogg")
+        # self.sonspause = pygame.mixer.Sound("./data/house_lo.ogg")
         self.WHITE = (255, 255, 255)
         self.BLACK = (0, 0, 0)
         self.RED = (255, 0, 0)
