@@ -36,10 +36,10 @@ class Obstacle:
     def constructionSisiny(self,cote,x,y,width,height):
         i = 0
         tabSisiny = []
-        tabSisiny.append(pygame.Rect(x,y,width - cote*2,cote))
-        tabSisiny.append(pygame.Rect(x, y  + height - cote*3 , width -cote, cote))
-        tabSisiny.append(pygame.Rect(x, y, cote, height-cote*2))
-        tabSisiny.append(pygame.Rect(x + width - cote*2, y, cote,height-cote - cote))
+        tabSisiny.append(pygame.Rect(x,y,width - (cote*3),cote)) # HAUT
+        tabSisiny.append(pygame.Rect(x, y  + height - cote*3 , width - (cote*3), cote)) # BAS
+        tabSisiny.append(pygame.Rect(x, y, cote, height-cote*2)) # GAUCHE
+        tabSisiny.append(pygame.Rect(x + width - cote*3, y, cote,height-cote * 2)) # DROITE
         return tabSisiny
 
     def definitionObstacle(self):

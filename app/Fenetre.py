@@ -8,12 +8,15 @@ from app.Sakafo import Sakafo
 from  app.Score import Score
 from app.GameOver import GameOver
 from app.Accueil import Accueil
+from app.utils import calculer_dimensions_jeu
 
 class Fenetre:
 
     def __init__(self):
         # pygame.init()
-        self.SCREEN = pygame.display.set_mode((870, 550))
+        width, height = self.configurer_ecran(mode="PC")
+        self.SCREEN = pygame.display.set_mode((width, height))
+        widthScreen, heightScreen = pygame.display.get_surface().get_size()
         pygame.display.set_caption('Snake Bidy')
         pygame.mixer.init()
         # pygame.mixer.music.load("./data/house_lo.ogg")
@@ -29,10 +32,19 @@ class Fenetre:
         self.LINE = (46,57,44)
         self.YELLOW = (255, 85, 5)
         self.cote = 15
-        self.width = self.cote * 50
-        self.height = self.cote * 30
+        # self.width = self.cote * 50
+        # self.height = self.cote * 30
+        self.width, self.height = calculer_dimensions_jeu(
+            widthScreen, 
+            heightScreen, 
+            self.cote,
+            pct_gauche=0.2,
+            pct_droite=0.2,
+            pct_haut=0.2,  
+            pct_bas=0.2
+        )
 
-        self.stade = Stade(self.cote,self.width,self.height)
+        self.stade = Stade(self.cote,self.width,self.height,widthScreen,heightScreen)
         self.x1 = self.stade.get_xStart()
         self.y1 = self.stade.get_yStart()
         self.obs = Obstacle(self.cote,self.x1,self.y1,self.width,self.height)
@@ -118,3 +130,22 @@ class Fenetre:
             time.sleep(0.2)
             await asyncio.sleep(0) 
         pygame.quit()
+
+    def configurer_ecran(self, mode="PC"):
+        """
+        Calcule et applique la taille de la fenêtre selon la plateforme cible.
+        Retourne un tuple (largeur, hauteur).
+        """
+        if mode == "MOBILE":
+            # Mode Portrait type Smartphone (ex: pour un futur build Android)
+            largeur = 450
+            hauteur = 800
+            
+        elif mode == "WEB" or mode == "PC":
+            # Mode Web adaptatif : on prend l'espace disponible dans le navigateur
+            pygame.display.init()
+            info = pygame.display.Info()
+            largeur = info.current_w
+            hauteur = info.current_h
+            
+        return largeur, hauteur
