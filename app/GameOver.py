@@ -1,4 +1,5 @@
 import pygame
+from app.utils import getFont, get_dynamic_font_size
 class GameOver:
 
     def __init__(self,x,y,width,height,cote,colorBorder,colorGame,colorFond):
@@ -10,12 +11,15 @@ class GameOver:
         self.colorBorder = colorBorder
 
         border = pygame.Rect(self.x, self.y, self.width - self.cote * 2, self.height - self.cote * 2)
-        self.font = pygame.font.SysFont('Snap ITC', 50)
+        font_size = get_dynamic_font_size('Game Over', border.width, 0.5)
+        self.font = getFont(font_size)
         self.text = self.font.render('Game Over', True, colorGame, colorFond)
         self.textRect = self.text.get_rect()
         self.textRect.center = (border.width / 2 + self.x, self.y + border.height / 3)
         RED = (255, 0, 0)
-        self.fontButton = pygame.font.SysFont('Arial Black', 30)
+
+        taille_bouton = get_dynamic_font_size(' play ', border.width, max_allowed_pct=0.20)
+        self.fontButton = getFont(taille_bouton)
         self.textButton = self.fontButton.render('restart', True, colorGame, RED)
         self.textRectButton = self.textButton.get_rect()
         self.textRectButton.center = (border.width / 2 + self.x, self.y + border.height / 2)
@@ -25,7 +29,7 @@ class GameOver:
 
         screen.blit(self.textButton,self.textRectButton)
         screen.blit(self.text, self.textRect)
-        pygame.draw.rect(screen, self.colorBorder, self.border,25)
+        pygame.draw.rect(screen, self.colorBorder, self.border,self.cote)
 
 
 
