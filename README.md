@@ -20,14 +20,17 @@ Voici un aperçu visuel de l'interface et du design de l'application à travers 
 
 ## 🚀 Fonctionnalités Clés
 
-* **Génération Procédurale de Labyrinthes :** À chaque nouvelle session, un labyrinthe unique est généré dynamiquement sur la grille, cassant la monotonie du jeu classique.
+* **Génération Procédurale de Labyrinthes :** À chaque nouvelle session, un labyrinthe unique est généré dynamiquement sur la grille. La densité des obstacles s'adapte de manière adaptative en fonction du meilleur score du joueur, cassant la monotonie du jeu classique et élevant le défi à chaque record battu.
 * **Moteur de Collisions Avancé :** Gestion précise des masques de collision avec détection de trois conditions de défaite critiques :
     * Impact avec les limites du terrain.
     * Impact avec les structures architecturales générées (obstacles).
     * Auto-collision (le serpent croise son propre corps).
-* **Système de Score & Courbe de Difficulté :** Calcul en temps réel de la croissance du serpent et ajustement progressif de la vitesse à chaque unité de nourriture consommée.
-* **Gestionnaire d'États (State Machine) :** Prise en charge fluide des transitions de jeu, incluant les fonctions de Pause et Reprise instantanées.
-
+* **Système de Score & Courbe de Difficulté :** Calcul en temps réel de la croissance du serpent à chaque unité de nourriture consommée. Intégration d'un catalogue de nourriture varié (pommes, bananes, fraises, fruits mystères) apportant un gameplay dynamique avec des valeurs de points et des raretés différentes.
+* **Gestionnaire d'États (State Machine) :** Prise en charge fluide des transitions de jeu, incluant le menu d'accueil dynamique, les fonctions de Pause et de Reprise instantanées, ainsi que l'écran de Game Over.
+* **Design Multiplateforme & Éco-système Adaptatif (Responsive) :** * **Indépendance de la Résolution :** Le jeu détecte automatiquement l'espace disponible (PC, Web/Pygbag, ou Mobile Portrait) et recalcule dynamiquement le nombre de cases de la grille pour occuper l'espace de manière optimale.
+    * **Paddings et Marges Relatives :** Configuration précise des zones d'affichage via des ratios de pourcentages, garantissant un espace dédié et aéré pour l'interface utilisateur.
+    * **UI/UX Dynamique :** Centralisation de la gestion typographique (`getFont`) et calcul automatique de la taille des polices (Titre, Boutons, Scores) pour qu'elles restent proportionnelles et parfaitement confinées à l'écran, sans jamais déborder.
+    * **Optimisation Visuelle (Contraste Élevé) :** Amélioration de la visibilité des assets sur fond noir via des animations de pulsation de taille (ondes sinusoïdales) et l'application de contours (silhouettes) sur les sprites pour un rendu typé Arcade de qualité professionnelle.
 ---
 
 ## 🕹️ Contrôles & Commandes
