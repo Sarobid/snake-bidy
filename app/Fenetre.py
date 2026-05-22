@@ -35,9 +35,9 @@ class Fenetre:
         self.cote = 17
         # self.width = self.cote * 50
         # self.height = self.cote * 30
-        self.pct_g = 0.0
+        self.pct_g = 0.05
         self.pct_h = 0.2
-        self.pct_d = 0.0
+        self.pct_d = 0.05
         self.pct_b = 0.2
         self.width, self.height = calculer_dimensions_jeu(
             widthScreen, 
@@ -52,25 +52,14 @@ class Fenetre:
         self.stade = Stade(self.cote,self.width,self.height,widthScreen,heightScreen,self.pct_g,self.pct_h)
         self.x1 = self.stade.get_xStart()
         self.y1 = self.stade.get_yStart()
-
-        self.rectScreen = pygame.Rect(self.x1, 0, self.width, heightScreen)
-        self.rectStade = pygame.Rect(self.x1, self.y1, self.width, self.height)
-        self.zone_bas = appliquer_padding_rect(getResteRectBasInRectExtAndRectInt(self.rectScreen, self.rectStade), 2)
-        print("rectScreen:", self.rectScreen)
-        print("rectStade:", self.rectStade)
-        print("zone_bas:", self.zone_bas)
-        colonnes_zone_bas = diviser_rect(self.zone_bas, 3, orientation='vertical')
-
-        self.zone_direction = colonnes_zone_bas[2]
-        self.zone_pause = colonnes_zone_bas[0]
-
+        self.virtualGamePad = VirtualGamePad(self.SCREEN,widthScreen,heightScreen,self.stade)
+        
         self.serp = Serpent(self.cote,self.x1 + self.cote * 5,self.y1 + self.cote)
         self.score = Score(self.x1,self.y1,self.cote,self.width,self.height,self.BLACK,self.GREEN)
-        self.obs = Obstacle(self.cote,self.x1,self.y1,self.width,self.height,self.score.meilleur)
+        self.obs = Obstacle(self.cote,self.x1,self.y1,self.width,self.height,self.score.meilleur,self.virtualGamePad)
         self.sak = Sakafo(self.obs,self.x1,self.y1,self.width,self.height,self.cote,self.BLUE)
         self.gameOver = GameOver(self.x1,self.y1,self.width,self.height,self.cote,self.WHITE,self.GREEN,self.BLACK)
         self.acceuil = Accueil(self.x1,self.y1,self.width,self.height,self.cote,self.WHITE,self.GREEN,self.RED)
-        self.virtualGamePad = VirtualGamePad(self.SCREEN,self.zone_direction,self.zone_pause)
         self.clock = pygame.time.Clock()
         self.ac = True
         self.is_running = True

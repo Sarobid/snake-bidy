@@ -1,6 +1,16 @@
 import pygame
 import os
 
+def positionnerRectZCentreVerticalementAGauche(rectExt: pygame.Rect, rectInt: pygame.Rect, rectZ: pygame.Rect) -> pygame.Rect:
+    rectZ.x = rectExt.left
+    rectZ.y = rectInt.top + (rectInt.height - rectZ.height) // 2    
+    return rectZ
+
+def positionnerRectZCentreVerticalementADroite(rectExt: pygame.Rect, rectInt: pygame.Rect, rectZ: pygame.Rect) -> pygame.Rect:
+    rectZ.x = rectExt.right - rectZ.width
+    rectZ.y = rectInt.top + (rectInt.height - rectZ.height) // 2
+    
+    return rectZ
 def diviser_rect(rect: pygame.Rect, nbre_parts: int, orientation: str = "vertical") -> list[pygame.Rect]:
     liste_rectangles = []
     

@@ -3,7 +3,8 @@ import random
 from app.utils import isIntersection 
 class Obstacle:
 
-    def __init__(self,cote,x,y,width,height,best_score=0):
+    def __init__(self,cote,x,y,width,height,best_score=0,virtualGamePad=None):
+        self.virtualGamePad = virtualGamePad
         self.obs = self.constructionSisiny(cote,x,y,width,height)
         self.taille = [1,2,3,4]
         self.width = width
@@ -13,7 +14,7 @@ class Obstacle:
         self.y1 = y
         self.nbreObstacle = self.calculer_nombre_obstacles(best_score)
         nbre = self.nbreObstacle
-        i = 0
+        i = 2
         while i < nbre:
             while 0 < 9:
                 if self.definitionObstacle() == False:
@@ -27,16 +28,23 @@ class Obstacle:
         self.obs.clear()
         self.obs = self.constructionSisiny(self.cote,self.x1,self.y1,self.width,self.height)
         nbre = self.nbreObstacle
-        i = 0
+        i = 2
         while i < nbre:
             while 0 < 9:
                 if self.definitionObstacle() == False:
                     break
             i = i + 1
 
+    def _add_zone_control_to_array(self, virtualGamePad,array):
+        if virtualGamePad:
+            array.append(virtualGamePad.zoneControlDirection)
+            array.append(virtualGamePad.zonePausePlay)
+        return array
+    
     def constructionSisiny(self,cote,x,y,width,height):
         i = 0
         tabSisiny = []
+        tabSisiny = self._add_zone_control_to_array(self.virtualGamePad, tabSisiny)
         tabSisiny.append(pygame.Rect(x,y,width ,cote)) # HAUT
         tabSisiny.append(pygame.Rect(x, y  + height - cote, width, cote)) # BAS
         tabSisiny.append(pygame.Rect(x, y, cote, height)) # GAUCHE
@@ -64,7 +72,7 @@ class Obstacle:
         return b
 
     def dessinObstacle(self,screen,color):
-        i = 0
+        i = 2
         while i < len(self.obs):
             pygame.draw.rect(screen, color, self.obs[i])
             i = i + 1

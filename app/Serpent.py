@@ -1,4 +1,5 @@
 import pygame
+from app.utils import isIntersection 
 class Serpent:
 
     def __init__(self,cote,x,y):
@@ -41,7 +42,7 @@ class Serpent:
     def midonaObstacle(self,obs,sonsMaty):
         i = 0
         while i < len(obs):
-            if obs[i].contains(self.serp[0]) == True:
+            if isIntersection(self.serp[0],obs[i]) == True:
                 self.maty = 1
                 #print("midona")
                 sonsMaty.play()
