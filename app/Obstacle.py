@@ -1,5 +1,6 @@
 import pygame
 import random
+from app.utils import isIntersection 
 class Obstacle:
 
     def __init__(self,cote,x,y,width,height,best_score=0):
@@ -72,15 +73,7 @@ class Obstacle:
             i = i + 1
 
     def intersection(self,rect1,rect2):
-        a = False
-        maxgauche = max(rect1.x, rect2.x)
-        mindroit = min(rect1.x + rect1.width, rect2.x + rect2.width)
-        maxbas = max(rect1.y, rect2.y)
-        minhaut = min(rect1.y + rect1.height, rect2.y + rect2.height)
-
-        if maxgauche < mindroit and maxbas < minhaut:
-            a = True
-        return a
+        return isIntersection(rect1, rect2)
     
     def calculer_nombre_obstacles(self, meilleur_score: float = 0) -> int:
         densite = self.calculer_densite_progressive(meilleur_score)

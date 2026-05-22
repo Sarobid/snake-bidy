@@ -1,6 +1,17 @@
 import pygame
 import os
 
+def isIntersection(rect1,rect2):
+    a = False
+    maxgauche = max(rect1.x, rect2.x)
+    mindroit = min(rect1.x + rect1.width, rect2.x + rect2.width)
+    maxbas = max(rect1.y, rect2.y)
+    minhaut = min(rect1.y + rect1.height, rect2.y + rect2.height)
+
+    if maxgauche < mindroit and maxbas < minhaut:
+        a = True
+    return a
+
 def getFont(size: int) -> pygame.font.Font:
     # size = size - 10
     font_path = "./data/font/press_start_2p/PressStart2P-Regular.ttf"

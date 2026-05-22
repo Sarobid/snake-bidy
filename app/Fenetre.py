@@ -14,7 +14,7 @@ class Fenetre:
 
     def __init__(self):
         # pygame.init()
-        width, height = self.configurer_ecran(mode="PC")
+        width, height = self.configurer_ecran(mode="MOBILE")
         self.SCREEN = pygame.display.set_mode((width, height))
         widthScreen, heightScreen = pygame.display.get_surface().get_size()
         pygame.display.set_caption('Snake Bidy')
@@ -34,10 +34,10 @@ class Fenetre:
         self.cote = 17
         # self.width = self.cote * 50
         # self.height = self.cote * 30
-        self.pct_g = 0.3
-        self.pct_h = 0.3
-        self.pct_d = 0.3
-        self.pct_b = 0.3
+        self.pct_g = 0.1
+        self.pct_h = 0.2
+        self.pct_d = 0.0
+        self.pct_b = 0.2
         self.width, self.height = calculer_dimensions_jeu(
             widthScreen, 
             heightScreen, 
@@ -144,8 +144,8 @@ class Fenetre:
         """
         if mode == "MOBILE":
             # Mode Portrait type Smartphone (ex: pour un futur build Android)
-            largeur = 450
-            hauteur = 800
+            largeur = 800
+            hauteur = 450
             
         elif mode == "WEB" or mode == "PC":
             # Mode Web adaptatif : on prend l'espace disponible dans le navigateur
