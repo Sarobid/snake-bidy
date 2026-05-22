@@ -8,7 +8,8 @@ from app.Sakafo import Sakafo
 from  app.Score import Score
 from app.GameOver import GameOver
 from app.Accueil import Accueil
-from app.utils import calculer_dimensions_jeu
+from app.VirtualGamePad import VirtualGamePad
+from app.utils import calculer_dimensions_jeu, getResteRectBasInRectExtAndRectInt, appliquer_padding_rect, diviser_rect
 
 class Fenetre:
 
@@ -34,7 +35,7 @@ class Fenetre:
         self.cote = 17
         # self.width = self.cote * 50
         # self.height = self.cote * 30
-        self.pct_g = 0.1
+        self.pct_g = 0.0
         self.pct_h = 0.2
         self.pct_d = 0.0
         self.pct_b = 0.2
@@ -51,13 +52,25 @@ class Fenetre:
         self.stade = Stade(self.cote,self.width,self.height,widthScreen,heightScreen,self.pct_g,self.pct_h)
         self.x1 = self.stade.get_xStart()
         self.y1 = self.stade.get_yStart()
-        
+
+        self.rectScreen = pygame.Rect(self.x1, 0, self.width, heightScreen)
+        self.rectStade = pygame.Rect(self.x1, self.y1, self.width, self.height)
+        self.zone_bas = appliquer_padding_rect(getResteRectBasInRectExtAndRectInt(self.rectScreen, self.rectStade), 2)
+        print("rectScreen:", self.rectScreen)
+        print("rectStade:", self.rectStade)
+        print("zone_bas:", self.zone_bas)
+        colonnes_zone_bas = diviser_rect(self.zone_bas, 3, orientation='vertical')
+
+        self.zone_direction = colonnes_zone_bas[2]
+        self.zone_pause = colonnes_zone_bas[0]
+
         self.serp = Serpent(self.cote,self.x1 + self.cote * 5,self.y1 + self.cote)
         self.score = Score(self.x1,self.y1,self.cote,self.width,self.height,self.BLACK,self.GREEN)
         self.obs = Obstacle(self.cote,self.x1,self.y1,self.width,self.height,self.score.meilleur)
         self.sak = Sakafo(self.obs,self.x1,self.y1,self.width,self.height,self.cote,self.BLUE)
         self.gameOver = GameOver(self.x1,self.y1,self.width,self.height,self.cote,self.WHITE,self.GREEN,self.BLACK)
         self.acceuil = Accueil(self.x1,self.y1,self.width,self.height,self.cote,self.WHITE,self.GREEN,self.RED)
+        self.virtualGamePad = VirtualGamePad(self.SCREEN,self.zone_direction,self.zone_pause)
         self.clock = pygame.time.Clock()
         self.ac = True
         self.is_running = True
@@ -71,32 +84,17 @@ class Fenetre:
                     self.is_running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP and self.serp.serp[0].y == self.serp.serp[1].y:
-                        self.serp.demarer = True
-                        self.serp.mooveY = -self.cote
-                        self.serp.mooveX = 0
+                        self.serp.moveUp()
                     elif event.key == pygame.K_LEFT and self.serp.serp[0].x == self.serp.serp[1].x:
-                        self.serp.demarer = True
-                        self.serp.mooveX = -self.cote
-                        self.serp.mooveY = 0
+                        self.serp.moveLeft()
                     elif event.key == pygame.K_DOWN and self.serp.serp[0].y == self.serp.serp[1].y:
-                       self.serp.demarer = True
-                       self.serp.mooveY = +self.cote
-                       self.serp.mooveX = 0
+                       self.serp.moveDown() 
                     elif event.key == pygame.K_RIGHT and self.serp.serp[0].x == self.serp.serp[1].x:
-                        self.serp.demarer = True
-                        self.serp.mooveX = +self.cote
-                        self.serp.mooveY = 0
+                        self.serp.moveRight()
                     elif event.key == pygame.K_RETURN and self.serp.demarer == False:
-                        self.serp.demarer = True
-                        self.serp.mooveX = -self.cote
-                        self.serp.mooveY = 0
+                        self.serp.moveLeft()
                     elif event.key == pygame.K_SPACE:
-                        if self.serp.demarer == True:
-                            self.serp.demarer = False
-                            # self.sonspause.play()
-                        elif self.serp.demarer == False:
-                            self.serp.demarer = True
-                            # self.sonspause.play()
+                        self.serp.playOrPause()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     xmouse = event.pos[0]
                     ymouse = event.pos[1]
@@ -115,6 +113,7 @@ class Fenetre:
             if self.ac == True:
                 self.stade.dessinStade(self.SCREEN, self.LINE)
                 self.acceuil.dessinAcceuil(self.SCREEN)
+
             else:
                 if self.serp.maty == 0:
                     # pygame.mixer.music.play(100,0.0)
@@ -125,12 +124,14 @@ class Fenetre:
                     self.serp.dessinSerpent(self.SCREEN,self.RED,self.GREEN)
                     self.stade.dessinStade(self.SCREEN,self.LINE)
                     self.obs.dessinObstacle(self.SCREEN, self.WHITE)
+                    self.virtualGamePad.draw(self.serp.demarer)
                 elif self.serp.maty == 1:
                     # pygame.mixer.music.stop()
                     self.stade.dessinStade(self.SCREEN, self.LINE)
                     self.gameOver.afficheGameOver(self.SCREEN,self.sak.score)
                     self.obs.set_best_score(self.score.meilleur)
                 self.score.dessinScore(self.SCREEN, self.sak.score)
+
             pygame.display.update()
             #musicGame.play()
             time.sleep(0.2)

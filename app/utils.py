@@ -1,6 +1,52 @@
 import pygame
 import os
 
+def diviser_rect(rect: pygame.Rect, nbre_parts: int, orientation: str = "vertical") -> list[pygame.Rect]:
+    liste_rectangles = []
+    
+    if nbre_parts <= 0:
+        return liste_rectangles
+
+    if orientation == "vertical":
+        # Découpage en colonnes : la largeur change, la hauteur reste identique
+        largeur_part = rect.width // nbre_parts
+        hauteur_part = rect.height
+        
+        for i in range(nbre_parts):
+            nouvel_x = rect.x + (i * largeur_part)
+            nouvel_y = rect.y
+            liste_rectangles.append(pygame.Rect(nouvel_x, nouvel_y, largeur_part, hauteur_part))
+            
+    elif orientation == "horizontal":
+        # Découpage en lignes : la hauteur change, la largeur reste identique
+        largeur_part = rect.width
+        hauteur_part = rect.height // nbre_parts
+        
+        for i in range(nbre_parts):
+            nouvel_x = rect.x
+            nouvel_y = rect.y + (i * hauteur_part)
+            liste_rectangles.append(pygame.Rect(nouvel_x, nouvel_y, largeur_part, hauteur_part))
+            
+    return liste_rectangles
+
+def appliquer_padding_rect(rect: pygame.Rect, padding: int) -> pygame.Rect:
+    rect.inflate_ip(-2 * padding, -2 * padding)
+    return rect
+
+def getResteRectBasInRectExtAndRectInt(rectExt: pygame.Rect, rectInt: pygame.Rect) -> pygame.Rect:
+    """
+    Calcule et retourne la zone libre (x, y, width, height) située en bas,
+    entre le rectangle intérieur (le Stade) et le rectangle extérieur (l'Écran).
+    Idéal pour positionner le VirtualGamepad sur mobile.
+    """
+    x = rectExt.left
+    y = rectInt.bottom
+    width = rectExt.width
+    height = rectExt.bottom - rectInt.bottom
+    if height < 0:
+        height = 0
+    return pygame.Rect(x, y, width, height)
+
 def isIntersection(rect1,rect2):
     a = False
     maxgauche = max(rect1.x, rect2.x)

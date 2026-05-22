@@ -88,6 +88,32 @@ class Serpent:
     def moove(self,x,y):
         self.deplacement(1,x,y)
 
+    def moveUp(self):
+        self.demarer = True
+        self.mooveY = -self.cote
+        self.mooveX = 0
+    
+    def moveDown(self):
+        self.demarer = True
+        self.mooveY = +self.cote
+        self.mooveX = 0
+    
+    def moveLeft(self):
+        self.demarer = True
+        self.mooveX = -self.cote
+        self.mooveY = 0
+
+    def moveRight(self):
+        self.demarer = True
+        self.mooveX = +self.cote
+        self.mooveY = 0
+
+    def playOrPause(self):
+        if self.demarer == True:
+            self.demarer = False
+        elif self.demarer == False:
+            self.demarer = True
+
     def dessinSerpent(self,screen,tete,color):
         i = 1
         pygame.draw.rect(screen, tete, self.serp[0])

@@ -1,6 +1,6 @@
 import pygame
 class Stade:
-    def __init__(self,cote,width,height,widthScreen,heightScreen,pct_gauche=0.05, pct_haut=0.05):
+    def __init__(self,cote,width,height,widthScreen,heightScreen,pct_gauche=0.0, pct_haut=0.0):
         self.cote = cote
         self.width = width
         self.height = height
@@ -25,8 +25,8 @@ class Stade:
         y0 = self.get_yStart()
         x1 = self.get_xStart()
         y1 = self.get_yStart()
-        widhMax = self.width + x0 - self.cote * 2
-        heightMax = self.height + y0 - self.cote * 2
+        widhMax = self.width + x0
+        heightMax = self.height + y0
         #Verticale
         while x1 <= widhMax:
             self.tab.append(pygame.Rect(x1,y1,x1,heightMax))

@@ -25,10 +25,7 @@ class Obstacle:
 
     def restartObstacle(self):
         self.obs.clear()
-        self.obs.append(pygame.Rect(self.x1, self.y1, self.width - self.cote * 2, self.cote))
-        self.obs.append(pygame.Rect(self.x1, self.y1 + self.height - self.cote * 3, self.width - self.cote, self.cote))
-        self.obs.append(pygame.Rect(self.x1, self.y1, self.cote, self.height - self.cote * 2))
-        self.obs.append(pygame.Rect(self.x1 + self.width - self.cote * 2, self.y1, self.cote, self.height - self.cote - self.cote))
+        self.obs = self.constructionSisiny(self.cote,self.x1,self.y1,self.width,self.height)
         nbre = self.nbreObstacle
         i = 0
         while i < nbre:
@@ -40,10 +37,10 @@ class Obstacle:
     def constructionSisiny(self,cote,x,y,width,height):
         i = 0
         tabSisiny = []
-        tabSisiny.append(pygame.Rect(x,y,width - (cote*3),cote)) # HAUT
-        tabSisiny.append(pygame.Rect(x, y  + height - cote*3 , width - (cote*3), cote)) # BAS
-        tabSisiny.append(pygame.Rect(x, y, cote, height-cote*2)) # GAUCHE
-        tabSisiny.append(pygame.Rect(x + width - cote*3, y, cote,height-cote * 2)) # DROITE
+        tabSisiny.append(pygame.Rect(x,y,width ,cote)) # HAUT
+        tabSisiny.append(pygame.Rect(x, y  + height - cote, width, cote)) # BAS
+        tabSisiny.append(pygame.Rect(x, y, cote, height)) # GAUCHE
+        tabSisiny.append(pygame.Rect(x + width - cote, y, cote,height)) # DROITE
         return tabSisiny
 
     def definitionObstacle(self):
