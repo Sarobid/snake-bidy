@@ -1,4 +1,5 @@
 import pygame
+from app.utils import isIntersection
 
 class VirtualGamePad:
     
@@ -15,6 +16,21 @@ class VirtualGamePad:
         self.zoneControlDirection = zoneControlDirection
         self.zonePausePlay = zonePausePlay
         self._initialize_buttons()
+
+    def handle_touch(self, mouseRect, moveUp, moveDown, moveLeft, moveRight, playOrPause):
+        if isIntersection(mouseRect, self.buttonUpRect):
+            moveUp()
+        elif isIntersection(mouseRect, self.buttonDownRect):
+            moveDown()
+        elif isIntersection(mouseRect, self.buttonLeftRect):
+            moveLeft()
+        elif isIntersection(mouseRect, self.buttonRightRect):
+            moveRight()
+        elif isIntersection(mouseRect, self.buttonPauseRect):
+            playOrPause()
+        elif isIntersection(mouseRect, self.buttonPayRect):
+            playOrPause()
+        return None
 
     def _initialize_buttons(self):
         self._initialize_buttonsControlDirection()
@@ -47,7 +63,7 @@ class VirtualGamePad:
         self._paint_button(self.buttonLeftRect)
         self._paint_button(self.buttonRightRect)
         self._paint_pause_play_button(is_paused)
-        
+
     def _paint_pause_play_button(self, is_paused):
         color = (200, 0, 0) if is_paused else (0, 200, 0)
         self._paint_button(self.buttonPauseRect if is_paused else self.buttonPayRect, color)

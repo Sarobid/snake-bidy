@@ -102,6 +102,8 @@ class Fenetre:
                     b = pygame.Rect(self.gameOver.textRectButton.x,self.gameOver.textRectButton.y,self.gameOver.textRectButton.width,self.gameOver.textRectButton.height)
                     c = pygame.Rect(self.acceuil.textRectButton.x,self.acceuil.textRectButton.y,self.acceuil.textRectButton.width,self.acceuil.textRectButton.height)
                     #e = pygame.Rect(self.score.textRectS.x,self.score.textRectS.y,self.score.textRectS.width,self.score.textRectS.height)
+                    if self.serp.maty == 0:
+                        self.virtualGamePad.handle_touch(a, self.serp.moveUp, self.serp.moveDown, self.serp.moveLeft, self.serp.moveRight, self.serp.playOrPause)
                     if self.serp.maty == 1 and self.obs.intersection(a,b) == True:
                         self.serp.restartSerp()
                         self.obs.restartObstacle()
