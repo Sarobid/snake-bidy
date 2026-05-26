@@ -92,8 +92,49 @@ class VirtualGamePad:
         self._paint_button(self.buttonLeftRect)
         self._paint_button(self.buttonRightRect)
         self._paint_pause_play_button(is_paused)
-        
+
 
     def _paint_pause_play_button(self, is_paused):
-        color = (200, 0, 0) if is_paused else (0, 200, 0)
-        self._paint_button(self.buttonPauseRect if is_paused else self.buttonPayRect, color)
+        rect = self.buttonPauseRect if is_paused else self.buttonPayRect
+        FOND_BOUTON       = (45, 50, 60)      
+        LUMIERE_BORD      = (90, 100, 115)    
+        OMBRE_BORD        = (20, 22, 26)      
+        
+        COULEUR_PLAY      = (50, 255, 50)     
+        COULEUR_PAUSE     = (255, 50, 50)     
+        
+        pygame.draw.rect(self.screen, FOND_BOUTON, rect)
+        
+        pygame.draw.line(self.screen, LUMIERE_BORD, rect.topleft, rect.topright, 2)
+        pygame.draw.line(self.screen, LUMIERE_BORD, rect.topleft, rect.bottomleft, 2)
+        pygame.draw.line(self.screen, OMBRE_BORD, rect.bottomleft, rect.bottomright, 2)
+        pygame.draw.line(self.screen, OMBRE_BORD, rect.topright, rect.bottomright, 2)
+
+        centre_x, centre_y = rect.center
+        max_largeur = int(rect.width * 0.8)
+        max_hauteur = int(rect.height * 0.8)
+
+        if not is_paused:
+            sommet_gauche_haut = (centre_x - max_largeur // 2, centre_y - max_hauteur // 2)
+            sommet_gauche_bas  = (centre_x - max_largeur // 2, centre_y + max_hauteur // 2)
+            pointe_droite      = (centre_x + max_largeur // 2, centre_y)
+            
+            pygame.draw.polygon(self.screen, COULEUR_PLAY, [sommet_gauche_haut, sommet_gauche_bas, pointe_droite])
+            
+        else:
+            largeur_barre = int(max_largeur * 0.33)
+            barre_gauche_rect = pygame.Rect(
+                centre_x - max_largeur // 2,
+                centre_y - max_hauteur // 2,
+                largeur_barre,
+                max_hauteur
+            )
+            barre_droite_rect = pygame.Rect(
+                centre_x + max_largeur // 2 - largeur_barre,
+                centre_y - max_hauteur // 2,
+                largeur_barre,
+                max_hauteur
+            )
+            
+            pygame.draw.rect(self.screen, COULEUR_PAUSE, barre_gauche_rect)
+            pygame.draw.rect(self.screen, COULEUR_PAUSE, barre_droite_rect)

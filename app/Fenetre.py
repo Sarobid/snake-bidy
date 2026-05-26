@@ -35,10 +35,10 @@ class Fenetre:
         self.cote = 17
         # self.width = self.cote * 50
         # self.height = self.cote * 30
-        self.pct_g = 0.05
+        self.pct_g = 0.0
         self.pct_h = 0.2
-        self.pct_d = 0.05
-        self.pct_b = 0.2
+        self.pct_d = 0.0
+        self.pct_b = 0.0
         self.width, self.height = calculer_dimensions_jeu(
             widthScreen, 
             heightScreen, 
@@ -137,7 +137,7 @@ class Fenetre:
         if mode == "MOBILE":
             # Mode Portrait type Smartphone (ex: pour un futur build Android)
             largeur = 800
-            hauteur = 450
+            hauteur = 400
             
         elif mode == "WEB" or mode == "PC":
             # Mode Web adaptatif : on prend l'espace disponible dans le navigateur
