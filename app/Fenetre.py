@@ -35,9 +35,9 @@ class Fenetre:
         self.cote = 17
         # self.width = self.cote * 50
         # self.height = self.cote * 30
-        self.pct_g = 0.0
+        self.pct_g = 0.05
         self.pct_h = 0.2
-        self.pct_d = 0.0
+        self.pct_d = 0.02
         self.pct_b = 0.0
         self.width, self.height = calculer_dimensions_jeu(
             widthScreen, 
