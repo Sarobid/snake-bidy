@@ -1,4 +1,5 @@
 import pygame
+from app.utils import isIntersection 
 class Serpent:
 
     def __init__(self,cote,x,y):
@@ -41,7 +42,7 @@ class Serpent:
     def midonaObstacle(self,obs,sonsMaty):
         i = 0
         while i < len(obs):
-            if obs[i].contains(self.serp[0]) == True:
+            if isIntersection(self.serp[0],obs[i]) == True:
                 self.maty = 1
                 #print("midona")
                 sonsMaty.play()
@@ -87,6 +88,32 @@ class Serpent:
 
     def moove(self,x,y):
         self.deplacement(1,x,y)
+
+    def moveUp(self):
+        self.demarer = True
+        self.mooveY = -self.cote
+        self.mooveX = 0
+    
+    def moveDown(self):
+        self.demarer = True
+        self.mooveY = +self.cote
+        self.mooveX = 0
+    
+    def moveLeft(self):
+        self.demarer = True
+        self.mooveX = -self.cote
+        self.mooveY = 0
+
+    def moveRight(self):
+        self.demarer = True
+        self.mooveX = +self.cote
+        self.mooveY = 0
+
+    def playOrPause(self):
+        if self.demarer == True:
+            self.demarer = False
+        elif self.demarer == False:
+            self.demarer = True
 
     def dessinSerpent(self,screen,tete,color):
         i = 1

@@ -8,7 +8,7 @@ class Accueil:
         self.width = width
         self.height = height
         self.cote = cote
-        border = pygame.Rect(self.x, self.y, self.width - self.cote * 2, self.height - self.cote * 2)
+        border = pygame.Rect(self.x, self.y, self.width, self.height)
         font_size = get_dynamic_font_size('Snake Bidy', border.width,0.5)
         self.font = getFont(font_size)
         self.text = self.font.render('Snake Bidy', True, colorGame, colorFond)

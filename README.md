@@ -11,11 +11,18 @@
 ## 🖼️ Aperçu du Jeu (Screenshots)
 
 Voici un aperçu visuel de l'interface et du design de l'application à travers ses trois états principaux.
+### 🏠 1. Écran d'Accueil
+![Écran d'Accueil](screenshots/home.png)
 
-| 🏠 Écran d'Accueil | 🎮 Gameplay (Labyrinthe Évolutif) | 💀 Écran de Game Over |
-| :---: | :---: | :---: |
-| ![Écran d'Accueil](screenshots/home.png) | ![Gameplay](screenshots/gameplay.png) | ![Game Over](screenshots/gameover.png) |
+---
 
+### 🎮 2. Gameplay (Labyrinthe Évolutif & Mode Mobile)
+![Gameplay](screenshots/gameplay.png)
+
+---
+
+### 💀 3. Écran de Game Over
+![Game Over](screenshots/gameover.png)
 ---
 
 ## 🚀 Fonctionnalités Clés
