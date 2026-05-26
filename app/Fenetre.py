@@ -8,13 +8,14 @@ from app.Sakafo import Sakafo
 from  app.Score import Score
 from app.GameOver import GameOver
 from app.Accueil import Accueil
-from app.utils import calculer_dimensions_jeu
+from app.VirtualGamePad import VirtualGamePad
+from app.utils import calculer_dimensions_jeu, getResteRectBasInRectExtAndRectInt, appliquer_padding_rect, diviser_rect
 
 class Fenetre:
 
     def __init__(self):
         # pygame.init()
-        width, height = self.configurer_ecran(mode="PC")
+        width, height = self.configurer_ecran(mode="MOBILE")
         self.SCREEN = pygame.display.set_mode((width, height))
         widthScreen, heightScreen = pygame.display.get_surface().get_size()
         pygame.display.set_caption('Snake Bidy')
@@ -34,10 +35,10 @@ class Fenetre:
         self.cote = 17
         # self.width = self.cote * 50
         # self.height = self.cote * 30
-        self.pct_g = 0.3
-        self.pct_h = 0.3
-        self.pct_d = 0.3
-        self.pct_b = 0.3
+        self.pct_g = 0.0
+        self.pct_h = 0.2
+        self.pct_d = 0.0
+        self.pct_b = 0.0
         self.width, self.height = calculer_dimensions_jeu(
             widthScreen, 
             heightScreen, 
@@ -51,10 +52,11 @@ class Fenetre:
         self.stade = Stade(self.cote,self.width,self.height,widthScreen,heightScreen,self.pct_g,self.pct_h)
         self.x1 = self.stade.get_xStart()
         self.y1 = self.stade.get_yStart()
+        self.virtualGamePad = VirtualGamePad(self.SCREEN,widthScreen,heightScreen,self.stade)
         
         self.serp = Serpent(self.cote,self.x1 + self.cote * 5,self.y1 + self.cote)
         self.score = Score(self.x1,self.y1,self.cote,self.width,self.height,self.BLACK,self.GREEN)
-        self.obs = Obstacle(self.cote,self.x1,self.y1,self.width,self.height,self.score.meilleur)
+        self.obs = Obstacle(self.cote,self.x1,self.y1,self.width,self.height,self.score.meilleur,self.virtualGamePad)
         self.sak = Sakafo(self.obs,self.x1,self.y1,self.width,self.height,self.cote,self.BLUE)
         self.gameOver = GameOver(self.x1,self.y1,self.width,self.height,self.cote,self.WHITE,self.GREEN,self.BLACK)
         self.acceuil = Accueil(self.x1,self.y1,self.width,self.height,self.cote,self.WHITE,self.GREEN,self.RED)
@@ -71,32 +73,17 @@ class Fenetre:
                     self.is_running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP and self.serp.serp[0].y == self.serp.serp[1].y:
-                        self.serp.demarer = True
-                        self.serp.mooveY = -self.cote
-                        self.serp.mooveX = 0
+                        self.serp.moveUp()
                     elif event.key == pygame.K_LEFT and self.serp.serp[0].x == self.serp.serp[1].x:
-                        self.serp.demarer = True
-                        self.serp.mooveX = -self.cote
-                        self.serp.mooveY = 0
+                        self.serp.moveLeft()
                     elif event.key == pygame.K_DOWN and self.serp.serp[0].y == self.serp.serp[1].y:
-                       self.serp.demarer = True
-                       self.serp.mooveY = +self.cote
-                       self.serp.mooveX = 0
+                       self.serp.moveDown() 
                     elif event.key == pygame.K_RIGHT and self.serp.serp[0].x == self.serp.serp[1].x:
-                        self.serp.demarer = True
-                        self.serp.mooveX = +self.cote
-                        self.serp.mooveY = 0
+                        self.serp.moveRight()
                     elif event.key == pygame.K_RETURN and self.serp.demarer == False:
-                        self.serp.demarer = True
-                        self.serp.mooveX = -self.cote
-                        self.serp.mooveY = 0
+                        self.serp.moveLeft()
                     elif event.key == pygame.K_SPACE:
-                        if self.serp.demarer == True:
-                            self.serp.demarer = False
-                            # self.sonspause.play()
-                        elif self.serp.demarer == False:
-                            self.serp.demarer = True
-                            # self.sonspause.play()
+                        self.serp.playOrPause()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     xmouse = event.pos[0]
                     ymouse = event.pos[1]
@@ -104,6 +91,8 @@ class Fenetre:
                     b = pygame.Rect(self.gameOver.textRectButton.x,self.gameOver.textRectButton.y,self.gameOver.textRectButton.width,self.gameOver.textRectButton.height)
                     c = pygame.Rect(self.acceuil.textRectButton.x,self.acceuil.textRectButton.y,self.acceuil.textRectButton.width,self.acceuil.textRectButton.height)
                     #e = pygame.Rect(self.score.textRectS.x,self.score.textRectS.y,self.score.textRectS.width,self.score.textRectS.height)
+                    if self.serp.maty == 0:
+                        self.virtualGamePad.handle_touch(a, self.serp.moveUp, self.serp.moveDown, self.serp.moveLeft, self.serp.moveRight, self.serp.playOrPause)
                     if self.serp.maty == 1 and self.obs.intersection(a,b) == True:
                         self.serp.restartSerp()
                         self.obs.restartObstacle()
@@ -115,6 +104,7 @@ class Fenetre:
             if self.ac == True:
                 self.stade.dessinStade(self.SCREEN, self.LINE)
                 self.acceuil.dessinAcceuil(self.SCREEN)
+
             else:
                 if self.serp.maty == 0:
                     # pygame.mixer.music.play(100,0.0)
@@ -125,12 +115,14 @@ class Fenetre:
                     self.serp.dessinSerpent(self.SCREEN,self.RED,self.GREEN)
                     self.stade.dessinStade(self.SCREEN,self.LINE)
                     self.obs.dessinObstacle(self.SCREEN, self.WHITE)
+                    self.virtualGamePad.draw(self.serp.demarer)
                 elif self.serp.maty == 1:
                     # pygame.mixer.music.stop()
                     self.stade.dessinStade(self.SCREEN, self.LINE)
                     self.gameOver.afficheGameOver(self.SCREEN,self.sak.score)
                     self.obs.set_best_score(self.score.meilleur)
                 self.score.dessinScore(self.SCREEN, self.sak.score)
+
             pygame.display.update()
             #musicGame.play()
             time.sleep(0.2)
@@ -144,8 +136,8 @@ class Fenetre:
         """
         if mode == "MOBILE":
             # Mode Portrait type Smartphone (ex: pour un futur build Android)
-            largeur = 450
-            hauteur = 800
+            largeur = 800
+            hauteur = 400
             
         elif mode == "WEB" or mode == "PC":
             # Mode Web adaptatif : on prend l'espace disponible dans le navigateur

@@ -37,7 +37,7 @@ class Score:
         self.fontC = getFont(self.font_size)
         self.textC = self.fontC.render(current_score_text, True, self.textColor, self.fontColor)
         self.textRectC = self.textC.get_rect()
-        self.textRectC.right = self.x + self.width - self.padding - (self.textRectC.width//2)
+        self.textRectC.right = self.x + self.width - self.padding
         self.textRectC.centery = self.y
         screen.blit(self.textC, self.textRectC)
 
